@@ -195,6 +195,10 @@ namespace Microsoft.Xna.Framework.Content
 						string readerTypeString = originalReaderTypeString;
 						readerTypeString = PrepareType(readerTypeString);
 
+						readerTypeString = readerTypeString.Replace("Microsoft.Xna.Framework.Vector2, TNA, Version=23.2.0.0, Culture=neutral, PublicKeyToken=null", typeof(Vector2).AssemblyQualifiedName);
+						readerTypeString = readerTypeString.Replace("Microsoft.Xna.Framework.Vector3, TNA, Version=23.2.0.0, Culture=neutral, PublicKeyToken=null", typeof(Vector3).AssemblyQualifiedName);
+						readerTypeString = readerTypeString.Replace("Microsoft.Xna.Framework.Vector4, TNA, Version=23.2.0.0, Culture=neutral, PublicKeyToken=null", typeof(Vector4).AssemblyQualifiedName);
+
 						Type l_readerType = Type.GetType(readerTypeString);
 						if (l_readerType != null)
 						{

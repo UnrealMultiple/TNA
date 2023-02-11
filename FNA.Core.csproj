@@ -137,6 +137,7 @@
     <Compile Include="src\GameServiceContainer.cs" />
     <Compile Include="src\GameTime.cs" />
     <Compile Include="src\GameWindow.cs" />
+    <Compile Include="src\GlobalUsings.cs" />
     <Compile Include="src\Graphics\ClearOptions.cs" />
     <Compile Include="src\Graphics\ColorWriteChannels.cs" />
     <Compile Include="src\Graphics\CubeMapFace.cs" />
@@ -295,7 +296,6 @@
     <Compile Include="src\IUpdateable.cs" />
     <Compile Include="src\LaunchParameters.cs" />
     <Compile Include="src\MathHelper.cs" />
-    <Compile Include="src\Matrix.cs" />
     <Compile Include="src\Media\MediaPlayer.cs" />
     <Compile Include="src\Media\MediaQueue.cs" />
     <Compile Include="src\Media\MediaState.cs" />
@@ -312,7 +312,6 @@
     <Compile Include="src\Point.cs" />
     <Compile Include="src\PreparingDeviceSettingsEventArgs.cs" />
     <Compile Include="src\Properties\AssemblyInfo.cs" />
-    <Compile Include="src\Quaternion.cs" />
     <Compile Include="src\Ray.cs" />
     <Compile Include="src\Rectangle.cs" />
     <Compile Include="src\Storage\StorageContainer.cs" />
@@ -322,16 +321,13 @@
     <Compile Include="src\TitleLocation.cs" />
     <Compile Include="src\Utilities\AssemblyHelper.cs" />
     <Compile Include="src\Utilities\FileHelpers.cs" />
-    <Compile Include="src\Utilities\FNADllMap.cs" />
     <Compile Include="src\Utilities\FNAInternalExtensions.cs" />
     <Compile Include="src\Utilities\MarshalHelper.cs" />
     <Compile Include="src\Utilities\XamarinHelper.cs" />
-    <Compile Include="src\Vector2.cs" />
-    <Compile Include="src\Vector3.cs" />
-    <Compile Include="src\Vector4.cs" />
     <Compile Include="lib\SDL2-CS\src\SDL2.cs" />
     <Compile Include="lib\FAudio\csharp\FAudio.cs" />
     <Compile Include="lib\Theorafile\csharp\Theorafile.cs" />
+    <Compile Include="src\VectorExtensions.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
