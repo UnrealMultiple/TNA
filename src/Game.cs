@@ -446,15 +446,12 @@ namespace Microsoft.Xna.Framework
 				 */
 				if (FrameWaitTimer is not null)
 				{
-					int counter = 0;
 					while (accumulatedElapsedTime < TargetElapsedTime)
 					{
-						FrameWaitTimer.Set(DateTime.UtcNow.Add(TargetElapsedTime - accumulatedElapsedTime).ToFileTimeUtc());
+						FrameWaitTimer.SetRelativeTimeSpan(TargetElapsedTime - accumulatedElapsedTime);
 						FrameWaitTimer.WaitOne();
-						counter++;
 						AdvanceElapsedTime();
 					}
-					Console.WriteLine(counter);
 				}
 				else
 				{
