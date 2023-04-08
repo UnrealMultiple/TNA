@@ -475,6 +475,7 @@ namespace Microsoft.Xna.Framework
 					while (accumulatedElapsedTime < TargetElapsedTime)
 					{
 						System.Threading.Thread.SpinWait(1);
+						AdvanceElapsedTime();
 					}
 				}
 			}
