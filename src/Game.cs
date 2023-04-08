@@ -17,6 +17,7 @@ using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input.Touch;
+using System.Runtime.InteropServices;
 #endregion
 
 namespace Microsoft.Xna.Framework
@@ -225,6 +226,8 @@ namespace Microsoft.Xna.Framework
 		private bool[] textInputControlDown;
 		private bool textInputSuppress;
 
+		private Timing.WaitableTimer FrameWaitTimer;
+
 		#endregion
 
 		#region Events
@@ -401,6 +404,11 @@ namespace Microsoft.Xna.Framework
 
 		public void Run()
 		{
+			if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
+			{
+				FrameWaitTimer = new Timing.WaitableTimer();
+			}
+
 			AssertNotDisposed();
 
 			if (!hasInitialized)
@@ -419,6 +427,7 @@ namespace Microsoft.Xna.Framework
 			AfterLoop();
 		}
 
+
 		public void Tick()
 		{
 			/* NOTE: This code is very sensitive and can break very badly,
@@ -431,27 +440,45 @@ namespace Microsoft.Xna.Framework
 
 			if (IsFixedTimeStep)
 			{
-				/* If we are in fixed timestep, we want to wait until the next frame,
-				 * but we don't want to oversleep. Requesting repeated 1ms sleeps and
-				 * seeing how long we actually slept for lets us estimate the worst case
-				 * sleep precision so we don't oversleep the next frame.
+				/*
+				 * Use high precision wait timers when available
+				 * Since Thread.Sleep isn't very accurate
 				 */
-				while (accumulatedElapsedTime + worstCaseSleepPrecision < TargetElapsedTime)
+				if (FrameWaitTimer is not null)
 				{
-					System.Threading.Thread.Sleep(1);
-					TimeSpan timeAdvancedSinceSleeping = AdvanceElapsedTime();
-					UpdateEstimatedSleepPrecision(timeAdvancedSinceSleeping);
+					int counter = 0;
+					while (accumulatedElapsedTime < TargetElapsedTime)
+					{
+						FrameWaitTimer.Set(DateTime.UtcNow.Add(TargetElapsedTime - accumulatedElapsedTime).ToFileTimeUtc());
+						FrameWaitTimer.WaitOne();
+						counter++;
+						AdvanceElapsedTime();
+					}
+					Console.WriteLine(counter);
 				}
-
-				/* Now that we have slept into the sleep precision threshold, we need to wait
-				 * for just a little bit longer until the target elapsed time has been reached.
-				 * SpinWait(1) works by pausing the thread for very short intervals, so it is
-				 * an efficient and time-accurate way to wait out the rest of the time.
-				 */
-				while (accumulatedElapsedTime < TargetElapsedTime)
+				else
 				{
-					System.Threading.Thread.SpinWait(1);
-					AdvanceElapsedTime();
+					/* If we are in fixed timestep, we want to wait until the next frame,
+					* but we don't want to oversleep. Requesting repeated 1ms sleeps and
+					* seeing how long we actually slept for lets us estimate the worst case
+					* sleep precision so we don't oversleep the next frame.
+					*/
+					while (accumulatedElapsedTime + worstCaseSleepPrecision < TargetElapsedTime)
+					{
+						System.Threading.Thread.Sleep(1);
+						TimeSpan timeAdvancedSinceSleeping = AdvanceElapsedTime();
+						UpdateEstimatedSleepPrecision(timeAdvancedSinceSleeping);
+					}
+
+					/* Now that we have slept into the sleep precision threshold, we need to wait
+					* for just a little bit longer until the target elapsed time has been reached.
+					* SpinWait(1) works by pausing the thread for very short intervals, so it is
+					* an efficient and time-accurate way to wait out the rest of the time.
+					*/
+					while (accumulatedElapsedTime < TargetElapsedTime)
+					{
+						System.Threading.Thread.SpinWait(1);
+					}
 				}
 			}
 
