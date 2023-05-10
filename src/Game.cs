@@ -18,6 +18,7 @@ using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input.Touch;
 using System.Runtime.InteropServices;
+using System.Threading;
 #endregion
 
 namespace Microsoft.Xna.Framework
@@ -407,6 +408,8 @@ namespace Microsoft.Xna.Framework
 			if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
 			{
 				FrameWaitTimer = new Timing.WaitableTimer();
+
+				FrameWaitTimer.SetRelativeTimeSpan(TargetElapsedTime);
 			}
 
 			AssertNotDisposed();
@@ -448,7 +451,6 @@ namespace Microsoft.Xna.Framework
 				{
 					while (accumulatedElapsedTime < TargetElapsedTime)
 					{
-						FrameWaitTimer.SetRelativeTimeSpan(TargetElapsedTime - accumulatedElapsedTime);
 						FrameWaitTimer.WaitOne();
 						AdvanceElapsedTime();
 					}
