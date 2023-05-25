@@ -447,8 +447,20 @@ namespace Microsoft.Xna.Framework
 				 * Use high precision wait timers when available
 				 * Since Thread.Sleep isn't very accurate
 				 */
+
+				if (!IsActive)
+				{
+					while (accumulatedElapsedTime < TargetElapsedTime)
+					{
+						Thread.Sleep(1);
+						AdvanceElapsedTime();
+					}
+				}
+
 				if (FrameWaitTimer is not null)
 				{
+					FrameWaitTimer.SetRelativeTimeSpan(TargetElapsedTime);
+
 					while (accumulatedElapsedTime < TargetElapsedTime)
 					{
 						FrameWaitTimer.WaitOne();
