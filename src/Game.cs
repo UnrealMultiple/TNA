@@ -456,13 +456,11 @@ namespace Microsoft.Xna.Framework
 						AdvanceElapsedTime();
 					}
 				}
-
-				if (FrameWaitTimer is not null)
+				else if (FrameWaitTimer is not null)
 				{
-					FrameWaitTimer.SetRelativeTimeSpan(TargetElapsedTime);
-
 					while (accumulatedElapsedTime < TargetElapsedTime)
 					{
+						FrameWaitTimer.SetRelativeTimeSpan(TargetElapsedTime - accumulatedElapsedTime);
 						FrameWaitTimer.WaitOne();
 						AdvanceElapsedTime();
 					}
