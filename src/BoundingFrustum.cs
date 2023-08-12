@@ -605,27 +605,14 @@ namespace Microsoft.Xna.Framework
 			 */
 
 			Vector3 v1, v2, v3;
-			Vector3 cross;
 
-			Vector3.Cross(ref b.Normal, ref c.Normal, out cross);
+			Vector3 cross = Vector3.Cross(b.Normal, c.Normal);
 
-			float f;
-			Vector3.Dot(ref a.Normal, ref cross, out f);
-			f *= -1.0f;
+			float f = -Vector3.Dot(a.Normal, cross);
 
-			Vector3.Cross(ref b.Normal, ref c.Normal, out cross);
-			Vector3.Multiply(ref cross, a.D, out v1);
-			// v1 = (a.D * (Vector3.Cross(b.Normal, c.Normal)));
-
-
-			Vector3.Cross(ref c.Normal, ref a.Normal, out cross);
-			Vector3.Multiply(ref cross, b.D, out v2);
-			// v2 = (b.D * (Vector3.Cross(c.Normal, a.Normal)));
-
-
-			Vector3.Cross(ref a.Normal, ref b.Normal, out cross);
-			Vector3.Multiply(ref cross, c.D, out v3);
-			// v3 = (c.D * (Vector3.Cross(a.Normal, b.Normal)));
+			v1 = (a.D * (Vector3.Cross(b.Normal, c.Normal)));
+			v2 = (b.D * (Vector3.Cross(c.Normal, a.Normal)));
+			v3 = (c.D * (Vector3.Cross(a.Normal, b.Normal)));
 
 			result.X = (v1.X + v2.X + v3.X) / f;
 			result.Y = (v1.Y + v2.Y + v3.Y) / f;

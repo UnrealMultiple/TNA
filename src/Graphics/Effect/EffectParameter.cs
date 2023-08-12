@@ -561,10 +561,6 @@ namespace Microsoft.Xna.Framework.Graphics
 
 		public void SetValueTranspose(Matrix value)
 		{
-			// FIXME: All Matrix sizes... this will get ugly. -flibit
-#if DEBUG
-			value.CheckForNaNs();
-#endif
 			unsafe
 			{
 				float* dstPtr = (float*) values;
@@ -657,9 +653,6 @@ namespace Microsoft.Xna.Framework.Graphics
 				{
 					for (int i = 0; i < value.Length; i += 1, dstPtr += 16)
 					{
-#if DEBUG
-						value[i].CheckForNaNs();
-#endif
 						dstPtr[0] = value[i].M11;
 						dstPtr[1] = value[i].M12;
 						dstPtr[2] = value[i].M13;
@@ -682,9 +675,6 @@ namespace Microsoft.Xna.Framework.Graphics
 				{
 					for (int i = 0; i < value.Length; i += 1, dstPtr += 12)
 					{
-#if DEBUG
-						value[i].CheckForNaNs();
-#endif
 						dstPtr[0] = value[i].M11;
 						dstPtr[1] = value[i].M12;
 						dstPtr[2] = value[i].M13;
@@ -700,9 +690,6 @@ namespace Microsoft.Xna.Framework.Graphics
 				{
 					for (int i = 0; i < value.Length; i += 1, dstPtr += 16)
 					{
-#if DEBUG
-						value[i].CheckForNaNs();
-#endif
 						dstPtr[0] = value[i].M11;
 						dstPtr[1] = value[i].M12;
 						dstPtr[2] = value[i].M13;
@@ -721,9 +708,6 @@ namespace Microsoft.Xna.Framework.Graphics
 				{
 					for (int i = 0; i < value.Length; i += 1, dstPtr += 12)
 					{
-#if DEBUG
-						value[i].CheckForNaNs();
-#endif
 						dstPtr[0] = value[i].M11;
 						dstPtr[1] = value[i].M12;
 						dstPtr[2] = value[i].M13;
@@ -742,9 +726,6 @@ namespace Microsoft.Xna.Framework.Graphics
 				{
 					for (int i = 0; i < value.Length; i += 1, dstPtr += 8)
 					{
-#if DEBUG
-						value[i].CheckForNaNs();
-#endif
 						dstPtr[0] = value[i].M11;
 						dstPtr[1] = value[i].M12;
 						dstPtr[4] = value[i].M21;
@@ -765,9 +746,6 @@ namespace Microsoft.Xna.Framework.Graphics
 		public void SetValue(Matrix value)
 		{
 			// FIXME: All Matrix sizes... this will get ugly. -flibit
-#if DEBUG
-			value.CheckForNaNs();
-#endif
 			unsafe
 			{
 				float* dstPtr = (float*) values;
@@ -860,9 +838,6 @@ namespace Microsoft.Xna.Framework.Graphics
 				{
 					for (int i = 0; i < value.Length; i += 1, dstPtr += 16)
 					{
-#if DEBUG
-						value[i].CheckForNaNs();
-#endif
 						dstPtr[0] = value[i].M11;
 						dstPtr[1] = value[i].M21;
 						dstPtr[2] = value[i].M31;
@@ -885,9 +860,6 @@ namespace Microsoft.Xna.Framework.Graphics
 				{
 					for (int i = 0; i < value.Length; i += 1, dstPtr += 12)
 					{
-#if DEBUG
-						value[i].CheckForNaNs();
-#endif
 						dstPtr[0] = value[i].M11;
 						dstPtr[1] = value[i].M21;
 						dstPtr[2] = value[i].M31;
@@ -903,9 +875,6 @@ namespace Microsoft.Xna.Framework.Graphics
 				{
 					for (int i = 0; i < value.Length; i += 1, dstPtr += 12)
 					{
-#if DEBUG
-						value[i].CheckForNaNs();
-#endif
 						dstPtr[0] = value[i].M11;
 						dstPtr[1] = value[i].M21;
 						dstPtr[2] = value[i].M31;
@@ -924,9 +893,6 @@ namespace Microsoft.Xna.Framework.Graphics
 				{
 					for (int i = 0; i < value.Length; i += 1, dstPtr += 16)
 					{
-#if DEBUG
-						value[i].CheckForNaNs();
-#endif
 						dstPtr[0] = value[i].M11;
 						dstPtr[1] = value[i].M21;
 						dstPtr[2] = value[i].M31;
@@ -945,9 +911,6 @@ namespace Microsoft.Xna.Framework.Graphics
 				{
 					for (int i = 0; i < value.Length; i += 1, dstPtr += 8)
 					{
-#if DEBUG
-						value[i].CheckForNaNs();
-#endif
 						dstPtr[0] = value[i].M11;
 						dstPtr[1] = value[i].M21;
 						dstPtr[4] = value[i].M12;
@@ -967,9 +930,6 @@ namespace Microsoft.Xna.Framework.Graphics
 
 		public void SetValue(Quaternion value)
 		{
-#if DEBUG
-			value.CheckForNaNs();
-#endif
 			unsafe
 			{
 				float* dstPtr = (float*) values;
@@ -987,9 +947,6 @@ namespace Microsoft.Xna.Framework.Graphics
 				float* dstPtr = (float*) values;
 				for (int i = 0; i < value.Length; i += 1, dstPtr += 4)
 				{
-#if DEBUG
-					value[i].CheckForNaNs();
-#endif
 					dstPtr[0] = value[i].X;
 					dstPtr[1] = value[i].Y;
 					dstPtr[2] = value[i].Z;
@@ -1046,9 +1003,6 @@ namespace Microsoft.Xna.Framework.Graphics
 
 		public void SetValue(Vector2 value)
 		{
-#if DEBUG
-			value.CheckForNaNs();
-#endif
 			unsafe
 			{
 				float* dstPtr = (float*) values;
@@ -1064,9 +1018,6 @@ namespace Microsoft.Xna.Framework.Graphics
 				float* dstPtr = (float*) values;
 				for (int i = 0; i < value.Length; i += 1, dstPtr += 4)
 				{
-#if DEBUG
-					value[i].CheckForNaNs();
-#endif
 					dstPtr[0] = value[i].X;
 					dstPtr[1] = value[i].Y;
 				}
@@ -1075,9 +1026,6 @@ namespace Microsoft.Xna.Framework.Graphics
 
 		public void SetValue(Vector3 value)
 		{
-#if DEBUG
-			value.CheckForNaNs();
-#endif
 			unsafe
 			{
 				float* dstPtr = (float*) values;
@@ -1094,9 +1042,6 @@ namespace Microsoft.Xna.Framework.Graphics
 				float* dstPtr = (float*) values;
 				for (int i = 0; i < value.Length; i += 1, dstPtr += 4)
 				{
-#if DEBUG
-					value[i].CheckForNaNs();
-#endif
 					dstPtr[0] = value[i].X;
 					dstPtr[1] = value[i].Y;
 					dstPtr[2] = value[i].Z;
@@ -1106,9 +1051,6 @@ namespace Microsoft.Xna.Framework.Graphics
 
 		public void SetValue(Vector4 value)
 		{
-#if DEBUG
-			value.CheckForNaNs();
-#endif
 			unsafe
 			{
 				float* dstPtr = (float*) values;
@@ -1126,9 +1068,6 @@ namespace Microsoft.Xna.Framework.Graphics
 				float* dstPtr = (float*) values;
 				for (int i = 0; i < value.Length; i += 1, dstPtr += 4)
 				{
-#if DEBUG
-					value[i].CheckForNaNs();
-#endif
 					dstPtr[0] = value[i].X;
 					dstPtr[1] = value[i].Y;
 					dstPtr[2] = value[i].Z;
