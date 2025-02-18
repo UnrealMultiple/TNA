@@ -404,11 +404,7 @@ namespace Microsoft.Xna.Framework.Graphics
 			{
 				GLDevice = FNA3D.FNA3D_CreateDevice(
 					ref PresentationParameters.parameters,
-#if DEBUG
-					1
-#else
 					0
-#endif
 				);
 			}
 			catch(Exception e)
@@ -1511,7 +1507,7 @@ namespace Microsoft.Xna.Framework.Graphics
 				);
 			}
 
-			for (int sampler = 0; sampler < modifiedVertexSamplers.Length; sampler += 1) 
+			for (int sampler = 0; sampler < modifiedVertexSamplers.Length; sampler += 1)
 			{
 				if (!modifiedVertexSamplers[sampler])
 				{
