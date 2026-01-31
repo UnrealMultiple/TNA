@@ -12,16 +12,31 @@ namespace Microsoft.Xna.Framework.Timing;
 
 public partial class WaitableTimer : WaitHandle
 {
-	[LibraryImport("kernel32.dll", EntryPoint = "CreateWaitableTimerW")]
-	private static partial SafeWaitHandle CreateWaitableTimer(IntPtr lpTimerAttributes, [MarshalAs(UnmanagedType.Bool)] bool bManualReset, [MarshalAs(UnmanagedType.LPWStr)] string lpTimerName);
+	[LibraryImport("kernel32.dll", EntryPoint = "CreateWaitableTimerExW")]
+	private static partial SafeWaitHandle CreateWaitableTimerEx(IntPtr lpTimerAttributes, [MarshalAs(UnmanagedType.LPWStr)] string lpTimerName, uint dwFlags, uint dwDesiredAccess);
 
 	[LibraryImport("kernel32.dll",  SetLastError = true)]
 	[return: MarshalAs(UnmanagedType.Bool)]
 	private static partial bool SetWaitableTimer(SafeWaitHandle hTimer, ref long pDueTime, int lPeriod, IntPtr pfnCompletionRoutine, IntPtr lpArgToCompletionRoutine, [MarshalAs(UnmanagedType.Bool)] bool fResume);
 
-	public WaitableTimer(bool manualReset = true, string timerName = null)
+	private const uint CREATE_WAITABLE_TIMER_HIGH_RESOLUTION = 0x00000002;
+	private const uint TIMER_ALL_ACCESS = 0x1F0003;
+
+	public WaitableTimer(bool manualReset = false, string timerName = null)
 	{
-		SafeWaitHandle = CreateWaitableTimer(IntPtr.Zero, manualReset, timerName);
+		SafeWaitHandle handle = CreateWaitableTimerEx(
+			IntPtr.Zero,
+			timerName,
+			CREATE_WAITABLE_TIMER_HIGH_RESOLUTION | (manualReset ? 0x00000001u : 0u),
+			TIMER_ALL_ACCESS
+		);
+
+		if (handle == null || handle.IsInvalid)
+		{
+			throw new Win32Exception();
+		}
+
+		SafeWaitHandle = handle;
 	}
 
 	public void Set(long dueTime)
